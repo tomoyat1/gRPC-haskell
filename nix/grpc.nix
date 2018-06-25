@@ -4,12 +4,12 @@
 
 stdenv.mkDerivation rec {
   name    = "grpc-${version}";
-  version = "1.2.0-${lib.strings.substring 0 7 rev}";
-  rev     = "e2cfe9df79c4eda4e376222df064c4c65e616352";
+  version = "1.12.0-${lib.strings.substring 0 7 rev}";
+  rev     = "bec3b5ada2c5e5d782dff0b7b5018df646b65cb0";
   src = fetchgit {
     inherit rev;
     url    = "https://github.com/grpc/grpc.git";
-    sha256 = "19ldbjlnbc287hkaylsigm8w9fai2bjdbfxk6315kl75cq54iprr";
+    sha256 = "0kcyg6zirqivvjgbdcplqq8p5zli2w1q2y3wr8rfwwri3812bqm2";
   };
 
   # `grpc`'s `Makefile` does some magic to detect the correct `ld` and `strip`

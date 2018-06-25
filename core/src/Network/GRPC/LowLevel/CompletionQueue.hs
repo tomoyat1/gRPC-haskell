@@ -62,7 +62,9 @@ withCompletionQueue grpc = bracket (createCompletionQueue grpc)
 
 createCompletionQueue :: GRPC -> IO CompletionQueue
 createCompletionQueue _ = do
-  unsafeCQ <- C.grpcCompletionQueueCreate C.reserved
+  -- put logic here to create factory and attributes,
+  -- per se https://github.com/sreecha/proposal/blob/8d5b962b93e699fcb6836e5b0be6ae5dbdadf8d7/L2.md
+  unsafeCQ <- C.grpcCompletionQueueCreateForPluck C.reserved
   currentPluckers <- newTVarIO 0
   currentPushers <- newTVarIO 0
   shuttingDown <- newTVarIO False

@@ -33,6 +33,14 @@ import Network.GRPC.Unsafe.Constants
 newtype StatusDetails = StatusDetails {unStatusDetails :: ByteString}
   deriving (Eq, IsString, Monoid, Semigroup, Show)
 
+{#pointer *grpc_completion_queue_factory as CompletionQueueFactory newtype #}
+
+deriving instance Show CompletionQueueFactory
+
+{#pointer *grpc_completion_queue_attributes as CompletionQueueAttributes newtype #}
+
+deriving instance Show CompletionQueueAttributes
+
 {#pointer *grpc_completion_queue as CompletionQueue newtype #}
 
 deriving instance Show CompletionQueue
@@ -144,6 +152,9 @@ castPeek p = do
 -- | Create a new 'CompletionQueue'. See the docs for
 -- 'grpcCompletionQueueShutdown' for instructions on how to clean up afterwards.
 {#fun grpc_completion_queue_create as ^
+  {`CompletionQueueFactory', `CompletionQueueAttributes', unReserved `Reserved'} -> `CompletionQueue'#}
+
+{#fun grpc_completion_queue_create_for_pluck as ^
   {unReserved `Reserved'} -> `CompletionQueue'#}
 
 -- | Block until we get the next event off the given 'CompletionQueue',
@@ -226,7 +237,7 @@ castPeek p = do
 {#fun grpc_call_cancel_with_status as ^
   {`Call', `StatusCode', `String',unReserved `Reserved'} -> `()'#}
 
-{#fun grpc_call_destroy as ^ {`Call'} -> `()'#}
+{#fun grpc_call_unref as ^ {`Call'} -> `()'#}
 
 -- | Gets the peer of the current call as a string.
 {#fun grpc_call_get_peer as ^ {`Call'} -> `String' getPeerPeek* #}
