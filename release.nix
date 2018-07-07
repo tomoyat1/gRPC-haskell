@@ -213,7 +213,7 @@ let
               (haskellPackagesNew.callPackage ./nix/proto3-suite.nix {});
 
           grpc-haskell-core =
-            usesGRPC (haskellPackagesNew.callPackage ./core { });
+            usesGRPC (pkgs.haskell.lib.dontCheck (haskellPackagesNew.callPackage ./core { }));
 
           grpc-haskell-no-tests =
             usesGRPC
